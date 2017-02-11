@@ -1,8 +1,9 @@
-#include<iostream.h>
-#include<conio.h>
-#include<stdlib.h>
+#include <iostream>
+#include <bits/stdc++.h>
+#include <stdlib.h>
+using namespace std;
 
-class stack
+class astack
 {
 	public:
 
@@ -10,7 +11,7 @@ class stack
 	int top;
 	int max_size;
 
-	stack()
+	astack()
 	{
 		top = -1;
 	}
@@ -45,15 +46,15 @@ class stack
 			top = top - 1;
 		}
 	}
-}
+};
 
 main()
 {
-	clrscr();
+	//clrscr();
 	int option,count = 0;
-	stack st1, st2;
+	astack st1, st2;
 	cout<<"Enter stack 1 details: ";
-	cout<<"\nEnter stack 1 size: ";
+	cout<<"\nEnter stack 1 max-size: ";
 	cin>>st1.max_size;
 	while(1)
 	{
@@ -74,7 +75,7 @@ main()
 		}
 	}
 	cout<<"\nEnter stack 2 details: ";
-	cout<<"\nEnter stack 2 size: ";
+	cout<<"\nEnter stack 2 max-size: ";
 	cin>>st2.max_size;
 	while(1)
 	{
@@ -117,5 +118,5 @@ main()
 	{
 		exit(0);
 	}
-	getch();
+	//getch();
 }
