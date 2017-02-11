@@ -9,14 +9,56 @@
 */
 #include <iostream>
 #include <bits/stdc++.h>
-#include <stack>
 using namespace std;
 
 #define MAX_SIZE 101
 
+// My Structure
+class Stack
+{
+private:
+	char sta[MAX_SIZE];
+	int tp;
+	
+public:
+	// Constructor
+	Stack()
+	{
+		tp = -1;
+	}
+
+	// Modifiers
+	void push(char element)
+	{
+		if(tp==MAX_SIZE-1) cout<<"Stack Overflow!!"<<endl;
+		else
+		{
+			tp++;
+			sta[tp] = element;
+		}
+	}
+
+	void pop()
+	{
+		if(tp == -1) cout<<"Stack is empty"<<endl;
+		else tp--;
+	}
+
+	// Inspectors
+	int size()
+	{
+		return tp+1;
+	}
+	
+	char top()
+	{
+		return sta[tp];
+	}
+};
+
 int main()
 {
-	stack<char> sta;
+	Stack sta;
 	char input[MAX_SIZE], output[MAX_SIZE];
 	int ind=0;
 	cout<<"\nPlease enter the infix expression to be converted into postfix\n";
@@ -60,9 +102,9 @@ int main()
 						}
 						else if(sta.top() == '^')
 						{
-							char ch = sta.top();
-							while(1)
+							while(1 && sta.size()>0 && sta.top() != '(')
 							{
+								char ch = sta.top();
 								if(ch=='^')
 								{
 									output[ind++] = '^';
@@ -72,16 +114,14 @@ int main()
 								{
 									output[ind++] = sta.top();
 									sta.pop();
-									sta.push(input[i]);
 									break;
 								}
 								else if(sta.top() == '+' || sta.top()=='-')
 								{
-									sta.push(input[i]);
 									break;
 								}
-								ch = sta.top();
 							}
+							sta.push(input[i]);
 						}
 						break;
 					case '*':
@@ -97,9 +137,9 @@ int main()
 						}
 						else if(sta.top() == '^')
 						{
-							char ch = sta.top();
-							while(1)
+							while(1 && sta.size()>0 && sta.top() != '(')
 							{
+								char ch = sta.top();
 								if(ch=='^')
 								{
 									output[ind++] = '^';
@@ -109,18 +149,70 @@ int main()
 								{
 									output[ind++] = sta.top();
 									sta.pop();
-									sta.push(input[i]);
 									break;
 								}
 								else if(sta.top() == '+' || sta.top()=='-')
 								{
-									sta.push(input[i]);
 									break;
 								}
-								ch = sta.top();
 							}
+							sta.push(input[i]);
 						}
-						break;	
+						break;
+					case '+':
+						if(sta.top() == '+' || sta.top() == '-')
+						{
+							output[ind++] = sta.top();
+							sta.pop();
+							sta.push(input[i]);
+						}
+						else if(sta.top() == '^'||sta.top() == '*' || sta.top()=='/')
+						{
+							while(1 && sta.size()>0 && sta.top()!='(')
+							{
+								char ch = sta.top();
+								if(ch=='^'||sta.top() == '*' || sta.top()=='/')
+								{
+									output[ind++] = sta.top();
+									sta.pop();
+								}
+								else if(sta.top() == '+' || sta.top() == '-')
+								{
+									output[ind++] = sta.top();
+									sta.pop();
+									break;
+								}
+							}
+							sta.push(input[i]);
+						}
+						break;
+					case '-':
+						if(sta.top() == '+' || sta.top() == '-')
+						{
+							output[ind++] = sta.top();
+							sta.pop();
+							sta.push(input[i]);
+						}
+						else if(sta.top() == '^'||sta.top() == '*' || sta.top()=='/')
+						{
+							while(1 && sta.size()>0 && sta.top()!='(')
+							{
+								char ch = sta.top();
+								if(ch=='^'||sta.top() == '*' || sta.top()=='/')
+								{
+									output[ind++] = sta.top();
+									sta.pop();
+								}
+								else if(sta.top() == '+' || sta.top() == '-')
+								{
+									output[ind++] = sta.top();
+									sta.pop();
+									break;
+								}
+							}
+							sta.push(input[i]);
+						}
+						break;
 				}
 			}
 		}
@@ -130,6 +222,8 @@ int main()
 		output[ind++] = sta.top();
 		sta.pop();
 	}
-	cout<<output<<endl;
+	//cout<<output<<endl;
+	for(int i=0; i<ind; ++i) cout<<output[i];
+	cout<<endl;
 	return 0;
 }
