@@ -34,4 +34,7 @@
 *.out
 *.app
 
+# Zip folders that must be sent mail for submission of the programming assignments
+*.zip
+
 # End of https://www.gitignore.io/api/c++
