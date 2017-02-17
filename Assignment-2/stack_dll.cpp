@@ -52,7 +52,7 @@ public:
 		int ret = 0;
 		if(head == NULL && tail == NULL)
 		{
-			cout<<"\nStack underflow!!\n";
+			cerr<<"\nStack underflow!!\n";
 			return 0;
 		}
 		ret = head->data;
