@@ -3,36 +3,37 @@
 	Anirudh Swaminathan 102115004 - Chemical 2nd year - 4th semester
 	Abhinandan Nabera 102115038 - Chemical 2nd year - 4th semester
 
-	This code is for implementing stacks using doubly linked lists.
+	This code is for implementing queue using doubly linked lists
 
 	This is a part of the programming assignment 2 given to students who opted to do Minors in CS in NIT-Trichy
 */
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
-class Stack
+class Queue
 {
 	struct Node
 	{
 		int data;
-		Node *prev, *next;
+		Node *next, *prev;
 	};
 	Node *head, *tail;
+	
 public:
-	// Constructor
-	Stack()
+	//Constructor
+	Queue()
 	{
 		head = NULL;
 		tail = NULL;
 	}
 	
-	// Modifiers
-	void push(int val)
+	//Modifiers
+	void enqueue(int val)
 	{
 		Node *new_node = new Node;
 		if(!new_node)
 		{
-			cerr<<"\nMemory allocation failure\n";
+			cerr<<"\nMemory cannot be allocated\n";
 			return;
 		}
 		if(head == NULL && tail == NULL)
@@ -51,20 +52,20 @@ public:
 			head->prev = new_node;
 			head = new_node;
 		}
-		cout<<"\n"<<val<<" successfully added to the stack";
+		cout<<"\n"<<val<<" successfully added to the queue";
 		return;
 	}
 	
-	int pop()
+	int dequeue()
 	{
 		Node *temp;
 		int ret = 0;
 		if(head == NULL && tail == NULL)
 		{
-			cerr<<"\nStack underflow!!\n";
+			cerr<<"\nQueue underflow!!\n";
 			return 0;
 		}
-		ret = head->data;
+		ret = tail->data;
 		if(head == tail)
 		{
 			tail = NULL;
@@ -72,46 +73,46 @@ public:
 			head = NULL;
 			delete temp;
 			temp = NULL;
-		}
+		}	
 		else
 		{
-			temp = head;
-			head = head->next;
-			temp->next = NULL;
-			head->prev = NULL;
+			temp = tail;
+			tail = tail->prev;
+			temp->prev = NULL;
+			tail->next = NULL;
 			delete temp;
 			temp = NULL;
 		}
 		return ret;
 	}
 	
-	// Inspectors
+	//Inspectors
 	void display()
 	{
-		Node *temp = head;
+		Node *temp = tail;
 		if(temp == NULL)
 		{
-			cerr<<"\nStack empty\n";
+			cerr<<"\nQueue empty\n";
 			return;
 		}
-		cout<<"\nPrinting stack contents\n";
+		cout<<"\nPrinting queue contents\n";
 		while(temp)
 		{
 			cout<<temp->data<<" ";
-			temp = temp->next;
+			temp = temp->prev;
 		}
 		cout<<endl;
 		return;
 	}
 	
-	// Destructor
-	~Stack()
+	//Destructor
+	~Queue()
 	{
 		cerr<<"\nDestructor called";
 		Node *temp = head;
 		while(temp)
 		{
-			cout<<"\nDeleting "<<head->data<<" from the stack";
+			cout<<"\nDeleting "<<head->data<<" from the queue";
 			if(head == tail)
 			{
 				tail = NULL;
@@ -134,25 +135,25 @@ public:
 
 int main()
 {
-	Stack astack;
+	Queue aqueue;
 	int choice;
 	int val;
 	do
 	{
-		cout<<"\n1. Push to stack\n2. Pop from stack\n3. Display contents of stack\n4. Quit\n";
+		cout<<"\n1. Enqueue\n2. Dequeue\n3. Display contents of queue\n4. Quit\n";
 		cin>>choice;
 		switch(choice)
 		{
 			case 1:
-				cout<<"\nEnter integer to push to stack:\t";
+				cout<<"\nEnter integer to store in queue:\t";
 				cin>>val;
-				astack.push(val);
+				aqueue.enqueue(val);
 				break;
 			case 2:
-				cout<<"\nThe element that was popped from the stack is "<<astack.pop();
+				cout<<"\nThe element that was dequeued was "<<aqueue.dequeue();
 				break;
 			case 3:
-				astack.display();
+				aqueue.display();
 				break;
 			case 4:
 				cout<<"\nQuitting program\n";
