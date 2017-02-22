@@ -1,3 +1,12 @@
+/*
+	Authored by:-
+	Anirudh Swaminathan 102115004 - Chemical 2nd year - 4th semester
+	Abhinandan Nabera 102115038 - Chemical 2nd year - 4th semester
+
+	This code is for implementing circular queue using linked lists
+
+	This is a part of the programming assignment 2 given to students who opted to do Minors in CS in NIT-Trichy
+*/
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
