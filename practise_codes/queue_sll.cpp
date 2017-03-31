@@ -57,6 +57,39 @@ public:
 		return ret;
 	}
 	
+	void reverse()
+	{
+		if(!head)
+		{
+			cerr<<"\nQueue empty!!\n";
+			return;
+		}
+		if(!(head->next))
+		{
+			cout<<"\n1 element only is present";
+			return;
+		}
+		Node *p, *q, *r;
+		p = q = r = head;
+		p = p->next->next;
+		q = q->next;
+		r->next = NULL;
+		q->next = r;
+		tail = r;
+		while(p)
+		{
+			r = q;
+			q = p;
+			p = p->next;
+			q->next = r;
+		}
+		head = q;
+		q = NULL;
+		r = NULL;
+		cout<<"\nThe contents of the queue has been reversed\n";
+		return;
+	}
+	
 	//Inspectors
 	void display()
 	{
@@ -101,7 +134,7 @@ int main()
 	int val;
 	do
 	{
-		cout<<"\n1. Enqueue\n2. Dequeue\n3. Display contents of queue\n4. Quit\n";
+		cout<<"\n1. Enqueue\n2. Dequeue\n3. Reverse Queue\n4. Display contents of queue\n5. Quit\n";
 		cin>>choice;
 		switch(choice)
 		{
@@ -114,15 +147,18 @@ int main()
 				cout<<"\nThe element that was dequeued is "<<q.dequeue();
 				break;
 			case 3:
-				q.display();
+				q.reverse();
 				break;
 			case 4:
+				q.display();
+				break;
+			case 5:
 				cout<<"\nQuitting program\n";
 				break;
 			default:
 				cout<<"\nWrong choice. Quitting program\n";
-				choice = 4;
+				choice = 5;
 		}
-	} while(choice!=4);
+	} while(choice!=5);
 	return 0;
 }

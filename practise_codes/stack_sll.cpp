@@ -50,6 +50,36 @@ public:
 		return ret;
 	}
 	
+	void reverse()
+	{
+		if(!top)
+		{
+			cerr<<"\nStack empty!!\n";
+			return;
+		}
+		if(!(top->next))
+		{
+			cout<<"\n1 element only is present";
+			return;
+		}
+		Node *p, *q, *r;
+		p = q = r = top;
+		p = p->next->next;
+		q = q->next;
+		r->next = NULL;
+		q->next = r;
+		while(p)
+		{
+			r = q;
+			q = p;
+			p = p->next;
+			q->next = r;
+		}
+		top = q;
+		cout<<"\nThe contents of the stack has been reversed\n";
+		return;
+	}
+	
 	// Inspectors
 	void display()
 	{
@@ -93,7 +123,7 @@ int main()
 	int val;
 	do
 	{
-		cout<<"\n1. Push to stack\n2. Pop from stack\n3. Display contents of stack\n4. Quit\n";
+		cout<<"\n1. Push to stack\n2. Pop from stack\n3. Reverse the stack\n4. Display contents of stack\n5. Quit\n";
 		cin>>choice;
 		switch(choice)
 		{
@@ -106,15 +136,18 @@ int main()
 				cout<<"\nThe element that was popped from the stack is "<<astack.pop();
 				break;
 			case 3:
-				astack.display();
+				astack.reverse();
 				break;
 			case 4:
+				astack.display();
+				break;
+			case 5:
 				cout<<"\nQuitting program\n";
 				break;
 			default:
 				cout<<"\nWrong choice. Quitting program\n";
-				choice = 4;
+				choice = 5;
 		}
-	} while(choice!=4);
+	} while(choice!=5);
 	return 0;
 }
